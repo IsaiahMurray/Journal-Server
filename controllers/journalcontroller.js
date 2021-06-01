@@ -10,7 +10,7 @@ router.get("/practice", function (req, res) {
   });
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", ValidateSession, async (req, res) => {
 
   console.log(chalk.bgRedBright(`USER ID: ${req.user.id}`))
   const journalEntry = {
@@ -50,7 +50,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/mine", async (req, res) => {
+router.get("/mine", ValidateSession, async (req, res) => {
 
   try {
     const foundJournals = await JournalModel.findAll({
@@ -68,7 +68,7 @@ router.get("/mine", async (req, res) => {
   }
 });
 
-router.get("/:title", async (req, res) => {
+router.get("/:title", ValidateSession, async (req, res) => {
   try {
     const foundJournals = await JournalModel.findAll({
       where: { title: req.params.title },
@@ -85,7 +85,7 @@ router.get("/:title", async (req, res) => {
   }
 });
 
-router.put("/edit/:entryId", async (req, res) => {
+router.put("/edit/:entryId", ValidateSession, async (req, res) => {
   const { title, date, entry } = req.body;
 
   try {
@@ -105,7 +105,7 @@ router.put("/edit/:entryId", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", ValidateSession, async (req, res) => {
   const query = { where: { id: req.params.id, owner: req.user.id } };
 
   try {
