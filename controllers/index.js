@@ -1,7 +1,4 @@
-const User = require('./usercontroller');
-const Journal = require('./journalcontroller');
-
 module.exports = {
-    User,
-    Journal
+    UserController: require('./usercontroller'),
+    JournalController: require('./journalcontroller')
 };

@@ -1,20 +1,20 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const { UserModel } = require("../models");
 require("dotenv").config();
 
 const ValidateSession = (req, res, next) => {
   const token = req.headers.authorization;
-  if (req.method === "OPTIONS") {
-    return next();
-  } else {
+  // if (req.method === "OPTIONS") {
+  //   return next();
+  // } else {
     if (!token) {
       return res
         .status(403)
-        .send({ auth: false, message: "Not token provided" });
+        .send({ auth: false, message: "No token provided" });
     } else {
       jwt.verify(token, process.env.JWT_SECRET, (err, decodeToken) => {
         if (!err && decodeToken) {
-          User.findOne({
+          UserModel.findOne({
             where: {
               id: decodeToken.id,
             },
@@ -33,6 +33,6 @@ const ValidateSession = (req, res, next) => {
       });
     }
   }
-};
+//};
 
 module.exports = ValidateSession;

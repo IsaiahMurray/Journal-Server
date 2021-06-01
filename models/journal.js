@@ -18,6 +18,7 @@ const Journal = db.define(
     },
     owner: {
       type: DataTypes.INTEGER,
+      allowNull: false
     },
   },
   {}

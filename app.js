@@ -1,24 +1,37 @@
 require("dotenv").config();
+const chalk = require("chalk");
 
-const express = require('express');
-const app = express();
+const Express = require("express");
+const app = Express();
+app.use(Express.json());
 
-const database = require('./db');
-const controllers = require('./controllers');
-const middlewares = require('./middleware');
+const dbConnection = require("./db");
+const middlewares = require("./middleware");
+const controllers = require("./controllers");
 
-app.use(express.json());
+// app.use(express.static(__dirname + '/public'));
+// console.log(__dirname);
 
-app.use('/user', controllers.User);
-app.use('/journal', controllers.Journal);
+// app.get('/', (req, res) => res.render('index'));
 
-database.authenticate()
-.then(() => database.sync())
-.then(app.listen(process.env.PORT, () => {
-    console.log(`Listening on ${process.env.PORT}`);
-}))
-.catch((e) => {
-console.log('[server]: Server yeeted.. weewoo..: ', e)
-});
+app.use("/user", controllers.UserController);
+app.use("/journal", controllers.JournalController);
+
+dbConnection
+  .authenticate()
+  .then(() => {
+    console.log(chalk.greenBright("DB AUTHENTICATED"));
+    dbConnection.sync();
+    console.log(chalk.cyanBright("DB SYNCED"));
+  }) // => {force: true}
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(chalk.yellowBright(`[Server: ] App is listening on Port ${process.env.PORT}`));
+    });
+  })
+  .catch((err) => {
+    console.log(chalk.redBright("[Server: ] Server Crashed"));
+    console.error(chalk.redBright(err));
+  });
 
 app.use(middlewares.Headers);
