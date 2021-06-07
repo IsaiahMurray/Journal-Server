@@ -20,9 +20,9 @@ app.use("/journal", controllers.JournalController);
 dbConnection
   .authenticate()
   .then(() => {
-    console.log(chalk.greenBright("DB AUTHENTICATED"));
+    //console.log(chalk.greenBright("DB AUTHENTICATED"));
     dbConnection.sync();
-    console.log(chalk.cyanBright("DB SYNCED"));
+    //console.log(chalk.cyanBright("DB SYNCED"));
   }) // => {force: true}
   .then(() => {
     app.listen(process.env.PORT, () => {
@@ -33,7 +33,8 @@ dbConnection
   .catch((err) => {
     // console.log(chalk.redBright("[Server: ] Server Crashed"));
     // console.error(chalk.redBright(err));
-    console.log("[Server: ] Server Crashed")
+    console.log("[Server: ] Server Crashed");
+    console.error(err);
   });
 
 app.use(middlewares.Headers);
