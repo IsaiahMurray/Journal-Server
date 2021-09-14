@@ -9,11 +9,6 @@ const dbConnection = require("./db");
 const middlewares = require("./middleware");
 const controllers = require("./controllers");
 
-// app.use(express.static(__dirname + '/public'));
-// console.log(__dirname);
-
-// app.get('/', (req, res) => res.render('index'));
-
 app.use("/user", controllers.UserController);
 app.use("/journal", controllers.JournalController);
 
