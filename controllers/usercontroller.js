@@ -43,7 +43,7 @@ router.post("/register", async (req, res) => {
     } else {
       console.log(error);
       res.status(500).json({
-        error: "Failed to register user.",
+        message: "Failed to register user.",
       });
     }
   }
@@ -73,18 +73,18 @@ router.post("/login", function (req, res) {
               res.status(200).json({
                 user: user,
                 message: "User has been logged in!",
-                sessionToken: token,
+                token: token,
               });
             } else {
-              res.status(401).send({ error: "Login failed. Incorrect password." });
+              res.status(401).send({ message: "Login failed. Incorrect password." });
             }
           }
         );
       } else {
-        res.status(404).json({ error: "Not Found.. User does not exist." });
+        res.status(404).json({ message: "Not Found.. User does not exist." });
       }
     })
-    .catch((err) => res.status(500).json({ error: err }));
+    .catch((err) => res.status(500).json({ message: err }));
 });
 
 module.exports = router;
