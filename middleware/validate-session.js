@@ -30,6 +30,5 @@ const ValidateSession = (req, res, next) => {
     });
   }
 };
-//};
 
 module.exports = ValidateSession;
