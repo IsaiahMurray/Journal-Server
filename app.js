@@ -1,5 +1,5 @@
 require("dotenv").config();
-//const chalk = require("chalk");
+const chalk = require("chalk");
 
 const Express = require("express");
 const app = Express();
@@ -15,21 +15,15 @@ app.use("/journal", controllers.JournalController);
 dbConnection
   .authenticate()
   .then(() => {
-    //console.log(chalk.greenBright("DB AUTHENTICATED"));
     dbConnection.sync();
-    //console.log(chalk.cyanBright("DB SYNCED"));
-  }) // => {force: true}
+  })
   .then(() => {
     app.listen(process.env.PORT, () => {
-      //console.log(chalk.yellowBright(`[Server: ] App is listening on Port ${process.env.PORT}`));
-      console.log(`[Server: ] App is listening on Port ${process.env.PORT}`);
+      console.log(chalk.yellowBright(`[Server: ] App is listening on Port ${process.env.PORT}`));
     });
   })
   .catch((err) => {
-    // console.log(chalk.redBright("[Server: ] Server Crashed"));
-    // console.error(chalk.redBright(err));
-    console.log("[Server: ] Server Crashed");
-    console.error(err);
+    console.error(chalk.redBright(err));
   });
 
 app.use(middlewares.Headers);
